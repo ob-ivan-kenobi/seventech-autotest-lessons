@@ -26,7 +26,6 @@ public class RestAssuredSterpdefs {
     private RequestSpecification request = given().log().all();
 
     private String host = "http://localhost:3000";
-    private String requestBody = "Body для данного запроса не передается";
     private Map<String, Object> sharedParams = new HashMap<>();
 
     @Дано("^входной параметр (.*) = (.*)$")
@@ -41,12 +40,6 @@ public class RestAssuredSterpdefs {
     public void requestToService(String httpMethod, String serviceMethod) {
         httpMethod = httpMethod.trim();
         serviceMethod = serviceMethod.trim();
-
-        if (httpMethod.equals("POST")) {
-            request = request.contentType(ContentType.JSON).body(requestBody);
-        }
-
-
 
         sharedParams.put("httpMethod", httpMethod);
         sharedParams.put("serviceMethod", serviceMethod);
@@ -66,7 +59,6 @@ public class RestAssuredSterpdefs {
         }
 
         validatableResponse = response.then();
-        requestBody = "Body для данного запроса не передается";
     }
 
     @Тогда("^код ответа (\\d+)$")
